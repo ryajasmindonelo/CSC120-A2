@@ -1,19 +1,17 @@
-from typing import Dict, Optional
-from Computer import *
+from typing import Dict, Optional, List
+from computer import *
 
 class ResaleShop:
-    itemID = 0
-    inventory : Dict[int, Computer] = {}
 
-    # What attributes will it need?
+    itemID = [0]
+    inventory_list: List[Dict[int, 'Computer']] = []
+    inventory: Dict[int, 'Computer'] = {}
+    inventory_list.append(inventory)
+    itemID.append(1)
 
-    # How will you set up your constructor?
-    # Remember: in python, all constructors have the same name (__init__)
     def __init__(self, inventory):
         self.inventory = inventory
-        pass # You'll remove this when you fill out your constructor
 
-    # What methods will you need?
     itemID = 0
 
     def buy(self,computer):
@@ -57,21 +55,21 @@ class ResaleShop:
 
     def refurbish(self, item_id: int, new_os: Optional[str] = None):
         if item_id in self.inventory:
-            computer = self.inventory[item_id] # locate the computer
-            if int(computer["year_made"]) < 2000:
-                computer["price"] = 0 # too old to sell, donation only
-            elif int(computer["year_made"]) < 2012:
-                computer["price"] = 250 # heavily-discounted price on machines 10+ years old
-            elif int(computer["year_made"]) < 2018:
-                computer["price"] = 550 # discounted price on machines 4-to-10 year old machines
+            computer = self.inventory[item_id]  # locate the computer
+            if computer.year_made < 2000:
+                computer.price = 0  # too old to sell, donation only
+            elif computer.year_made < 2012:
+                computer.price = 250  # heavily-discounted price on machines 10+ years old
+            elif computer.year_made < 2018:
+                computer.price = 550  # discounted price on machines 4-to-10 years old
             else:
-                computer["price"] = 1000 # recent stuff
+                computer.price = 1000  # recent stuff
 
             if new_os is not None:
-                computer["operating_system"] = new_os # update details after installing new OS
+                computer.operating_system = new_os  # update details after installing new OS
         else:
-            print("Item", item_id, "not found. Please select another item to refurbish.")
-
+            print(f"Computer {item_id} refurbished. New price: {computer.price}, OS: {computer.operating_system}")
+        
 def main():
     inventory : Dict[int, Computer] = {}
     Rya = ResaleShop({})
