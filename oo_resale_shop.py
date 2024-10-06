@@ -3,20 +3,21 @@ from computer import *
 
 class ResaleShop:
 
-    itemID = [0]
-    inventory_list: List[Dict[int, 'Computer']] = []
-    inventory: Dict[int, 'Computer'] = {}
-    inventory_list.append(inventory)
-    itemID.append(1)
+    itemID = 0
+    inventory: list[Computer]
 
-    def __init__(self, inventory):
-        self.inventory = inventory
+    def __init__(self):
+        self.inventory = []
 
     itemID = 0
 
-    def buy(self,computer):
+    """
+    Takes in a Dict containing all the information about a computer,
+    adds it to the inventory, returns the assigned item_id
+    """
+    def buy(self,computer:Computer):
+        self.inventory.append(computer)
         self.itemID += 1 # increment itemID
-        self.inventory[self.itemID] = computer
         return self.itemID
 
     """
@@ -30,7 +31,7 @@ class ResaleShop:
             print("Item", item_id, "not found. Cannot update price.")
 
     """
-    Takes in an item_id, removes the associated computer if it is the inventory, 
+    Takes in an item_id, removes the associated computer if it is the inventory,
     prints error message otherwise
     """
     def sell(self, item_id: int):
@@ -47,12 +48,15 @@ class ResaleShop:
         # If the inventory is not empty
         if self.inventory:
             # For each item
-            for item_id in self.inventory:
+            for item_id in range (len(self.inventory)):
                 # Print its details
-                print(f'Item ID: {item_id} : {self.inventory[item_id]}')
+                print(f'Item ID: {item_id} : {self.inventory[item_id].description, self.inventory[item_id].processor_type, self.inventory[item_id].hard_drive_capacity, self.inventory[item_id].memory, self.inventory[item_id].operating_system, self.inventory[item_id].year_made, self.inventory[item_id].price}')
         else:
             print("No inventory to display.")
 
+    """
+    locates if the computer is in the inventory and prints out the price if it is there,
+    """
     def refurbish(self, item_id: int, new_os: Optional[str] = None):
         if item_id in self.inventory:
             computer = self.inventory[item_id]  # locate the computer
@@ -71,10 +75,16 @@ class ResaleShop:
             print(f"Computer {item_id} refurbished. New price: {computer.price}, OS: {computer.operating_system}")
         
 def main():
-    inventory : Dict[int, Computer] = {}
-    Rya = ResaleShop({})
-    Rya.buy({"description":"2019 MacBook Pro", "processor_type":"Intel", "hard_drive_capacity":256, "memory":16, "operating_system":"High Sierra", "year_made":2019, "price":1000})
-    Rya.update_price(1,35)
-    Rya.print_inventory()
+    inventory: list[Computer]
+    rya = ResaleShop()
+    my_computer = Computer(
+        "Mac Pro (Late 2013)",
+        "3.5 GHc 6-Core Intel Xeon E5",
+        1024, 64,
+        "macOS Big Sur", 2013, 1500
+    )
+    rya.buy(my_computer)
+    rya.update_price(1,35)
+    rya.print_inventory()
 
 main()
