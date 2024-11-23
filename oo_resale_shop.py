@@ -36,7 +36,7 @@ class ResaleShop:
     """
     def sell(self, item_id: int):
         if item_id in self.inventory:
-            del self.inventory[item_id]
+            self.inventory.remove[item_id]
             print("Item", item_id, "sold!")
         else:
             print("Item", item_id, "not found. Please select another item to sell.")
@@ -84,7 +84,10 @@ def main():
         "macOS Big Sur", 2013, 1500
     )
     rya.buy(my_computer)
+    rya.sell(rya)
+    rya.buy(my_computer)
     rya.update_price(1,35)
     rya.print_inventory()
+
 
 main()
